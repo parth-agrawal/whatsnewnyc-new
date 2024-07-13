@@ -2,7 +2,8 @@ import React from "react";
 import "./App.css";
 import { AgentEvent, listenToStream, stopListening } from "./lib/events";
 
-import {JobPostings} from '../../extensions/schema';
+import { JobPostings } from '../../extensions/schema';
+import { DisplayTitles } from "./components/DisplayTitles";
 
 type Status = "working" | "success" | "fail" | "idle";
 
@@ -63,10 +64,15 @@ function App() {
         </button>
       </div>
       <div className="flex items-center">
-          <Icon status={status} />
-          <p>{newest || "No events yet."}</p>
-        </div>
-        {titles && <p>Jobs available: {}</p>}
+        <Icon status={status} />
+        <p>{newest || "No events yet."}</p>
+      </div>
+
+      {titles && <p>Jobs available: { }</p>}
+      {titles && <DisplayTitles titles={titles} />}
+
+
+
     </div>
   );
 }
