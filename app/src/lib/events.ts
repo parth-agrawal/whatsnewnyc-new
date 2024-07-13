@@ -1,3 +1,5 @@
+import { JobPostings } from "../../../extensions/schema";
+
 let eventSource: EventSource | null = null;
 
 const baseUrl = process.env.NODE_ENV === 'development' ? `http://localhost:3040` : '';
@@ -9,7 +11,7 @@ export type AgentEvent = {
   description?: string;
   objectiveComplete?: {
     kind: "ObjectiveComplete";
-    restaurants: string[];
+    jobPostings: JobPostings;
     result: string;
   }
   objectiveFailed: {
@@ -21,11 +23,10 @@ export type AgentEvent = {
 export const listenToStream = (
   url: string,
   objective: string,
-  location: string,
   callback: (res: AgentEvent) => void,
 ) => {
   eventSource = new EventSource(
-    `${baseUrl}/api/browse?url=${encodeURIComponent(url)}&objective=${encodeURIComponent(objective)}%20${encodeURIComponent(location)}&maxIterations=10`,
+    `${baseUrl}/api/browse?url=${encodeURIComponent(url)}&objective=${encodeURIComponent(objective)}&maxIterations=3`,
   );
   eventSource.onmessage = function (event) {
     let response;
