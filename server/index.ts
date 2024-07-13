@@ -3,7 +3,7 @@ import path from "path";
 import agent from "../agent";
 import { Browser, Logger } from "nolita";
 import inventory from "../extensions/inventory";
-import { CustomSchema } from "../extensions/schema";
+import { JobPostingsSchema } from "../extensions/schema";
 import { nolitarc } from "../agent/config";
 import "dotenv/config";
 import { fileURLToPath } from "url";
@@ -65,7 +65,7 @@ app.get("/api/browse", async (req, res) => {
   const page = await browser.newPage({});
   await page.goto(req.query.url as string);
   const answer = await page.browse(req.query.objective, {
-    schema: CustomSchema,
+    schema: JobPostingsSchema,
     maxTurns: parseInt(req.query.maxIterations as string) || 10,
   })
   if (answer) {
